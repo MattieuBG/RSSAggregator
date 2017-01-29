@@ -1,5 +1,5 @@
 
-<div class="well bs-component " style="background-color: white;">
+<div class="well bs-component " style="background-color: white;" >
 
     <form name="form" class="form-horizontal" novalidate>
         <fieldset>
@@ -12,26 +12,31 @@
             <div class="form-group">
                 <div class="col-lg-2">
                 </div>
-                <div class="col-lg-8">
+                <div class="col-lg-7">
                     <input class="btn btn-sm btn-red" ng-click="addFlux(url)" ng-disabled="!form.$valid" value="Ajouter le flux"/>
                     <ul ng-app ng-controller=feedCtrl class="nav navbar-nav navbar-right">
                         <li>Utilisateur : {{user.email}}  </li>
                     </ul>
                 </div>
-                <a class="col-lg-2" href="#/login">Log out</a>
+                <div class="col-lg-1">
+                </div>
+                <input class="btn btn-sm btn-red col-lg-1" ng-click="logout()" value="log out"/>
             </div>
         </fieldset>
     </form>
 </div>
-<div ng-app ng-controller=feedCtrl>
-    <ul ng-repeat=" opt in listUrl">
-        <li >
-            {{ opt.url }}  <input class="btn btn-sm btn-red" ng-click="deleteFlux(opt.id)" value="Supprimer ce flux"/>
-        </li>
 
-            {{ opt.response }}
-
-    </ul>
-
-    <p>{{opt}}</p>
+<div class="container" ng-repeat=" opt in listUrl" >
+    <h2>{{ opt.xmlParsed.title }} - ({{ opt.url }})  <input class="btn btn-sm btn-red" ng-click="deleteFlux(opt.id)" value="Supprimer ce flux"/>
+        <img src={{opt.xmlParsed.image}} alt="image"/></h2>
+    <div class="list-group">
+        <div class="list-group-item" ng-repeat=" item in opt.xmlParsed.items" >
+            <h4 class="list-group-item-heading"> {{ item.title }} - ({{item.pubDate}})</h4>
+            <p class="list-group-item-text">{{ item.description}}</p>
+            <a class="list-group-item-text" href="{{ item.link}}"> lien de l'article
+            </a>
+        </div>
+    </div>
 </div>
+
+

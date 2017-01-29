@@ -3,6 +3,7 @@ myApp.controller('feedCtrl',
         function ($scope, $log, API_URL, IMG_URL, Data, tsUtils, $state, $rootScope, $http) {
 
             $scope.listUrl = new Array();
+            $scope.listXML = new Array();
 
             $scope.user = tsUtils.loadUser();
             $log.debug("USERRRR");
@@ -51,11 +52,13 @@ myApp.controller('feedCtrl',
                             for (var toto = 0; toto < donnee.length; toto++){
                                 $log.debug("URL: " + donnee[toto].url);
                                 $log.debug("ID:" + donnee[toto].id);
-                                $log.debug("RESPONSE:" + donnee[toto].response);
+                                $log.debug("RESPONSE:" + donnee[toto].xmlParsed);
 
                                 $scope.listUrl[toto] = donnee[toto];
+                                $scope.listXML[toto] = donnee[toto].xmlParsed;
+
                                 //$scope.trustAsResourceUrl(donnee[toto].url);
-                                $scope.getFluxRSS(donnee[toto].url);                            // -> http://blog.inovia-conseil.fr/?p=202
+                                //$scope.getFluxRSS(donnee[toto].url);                            // -> http://blog.inovia-conseil.fr/?p=202
                             }
                             //$log.debug(listUrl);
 
@@ -91,6 +94,11 @@ myApp.controller('feedCtrl',
                     })
             };
 
+            $scope.logout = function() {
+                tsUtils.logOut();
+                $state.go("login");
+            };
+
             $scope.deleteFlux = function(id) {
 
                 //tsUtils.startLoader();
@@ -100,6 +108,7 @@ myApp.controller('feedCtrl',
                         $log.debug("DATA:::");
                         $log.debug(data);
                         $scope.listUrl = new Array();
+                        $scope.listXML = new Array();
                         $scope.ok();
 
                     },

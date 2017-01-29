@@ -57,6 +57,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider) {
 myApp.run(['$rootScope', '$location', '$log', '$state', 'tsUtils',
     function ($rootScope, $location, $log, $state, tsUtils) {
 
+
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
 
             // change this to "load from local storage"

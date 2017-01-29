@@ -30,6 +30,9 @@ myApp.factory('tsUtils',
                 storeUser: function (user) {
                     $localStorage.ts_admin_user = user;
                 },
+                logOut: function () {
+                    $localStorage.ts_admin_user = null;
+                },
                 isConnected: function () {
                     return angular.isDefined($localStorage.ts_admin_user) && $localStorage.ts_admin_user != null;
                 },
