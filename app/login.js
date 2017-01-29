@@ -11,12 +11,14 @@ myApp.controller('loginCtrl',
                     $scope.password,
                     function (data, status, headers, config) {
                         tsUtils.stopLoader();
-                        if(status >= 200 && status < 300) {
+                        $log.debug(data.status);
+
+                        if(status >= 200 && status < 300 && data.status != "login.error") {
                             $log.debug(data);
                             tsUtils.storeUser(data);
                             $state.go("feed");
                         } else {
-                            tsUtils.alertGenericError();
+                            tsUtils.alertGenericError("Le compte n'existe pas");
                         }
                     },
                     function (data, status, headers, config) {
@@ -34,12 +36,13 @@ myApp.controller('loginCtrl',
                     $scope.password,
                     function (data, status, headers, config) {
                         tsUtils.stopLoader();
-                        if(status >= 200 && status < 300) {
+                       // $log.debug(data.status);
+                        if(status >= 200 && status < 300 && data.status != "compte.exist") {// || data.status != "login.error") {
                             $log.debug(data);
                             tsUtils.storeUser(data);
                             $state.go("feed");
                         } else {
-                            tsUtils.alertGenericError();
+                            tsUtils.alertGenericError("Le compte existe déjà");
                         }
                     },
                     function (data, status, headers, config) {

@@ -11,6 +11,9 @@ myApp.factory('tsUtils',
                 alertGenericError: function () {
                     alert("Une erreur s'est produite");
                 },
+                alertGenericError: function (text) {
+                    alert(text);
+                },
                 alertError: function(error) {
                     alert(error);
                 },
