@@ -25,6 +25,26 @@ myApp.factory("Data",
                 return $http(req).success(success).error(error);
             };
 
+            data.createA = function (email, password, success, error) {
+
+                var url = API_URL + "accountRss/create";
+
+                var req = {
+                    method: 'POST'
+                    , url: url
+                    , headers: {
+                        "Content-Type": "application/json" //application/x-www-form-urlencoded
+                    }
+                    , params: {
+                        email: email,
+                        password: password
+                    }
+                    , data: " "
+                };
+
+                return $http(req).success(success).error(error);
+            };
+
             data.getfeed = function (success, error) {
 
                 var url = API_URL + "feed/getFeeds";
@@ -61,6 +81,46 @@ myApp.factory("Data",
                 };
 
                 return $http(req).success(success).error(error); // deja testé en jsonp
+            };
+
+            data.addflux = function (urltoadd, success, error) {
+
+                var url = API_URL + "feed/addFeeds";
+
+                var req = {
+                    method: 'POST'
+                    , url: url
+                    , headers: {
+                        "Content-Type": "application/json",
+                        "token": tsUtils.getToken()
+                    }
+                    , params: {
+                        feedUrl: urltoadd,
+                        //password: password
+                    }
+                    , data: " "
+                };
+
+                return $http(req).success(success).error(error);
+            };
+
+            data.deleteflux = function (id, success, error) {
+
+                var url = API_URL + "feed/" + id;
+
+                var req = {
+                    method: 'DELETE'
+                    , url: url
+                    , headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                        "token": tsUtils.getToken()
+                    }
+                    , params: {
+                    }
+                    , data: " "
+                };
+
+                return $http(req).success(success).error(error);
             };
 
             /* Information : exemple type d'une requête */

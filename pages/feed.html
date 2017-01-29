@@ -1,8 +1,36 @@
+
+<div class="well bs-component " style="background-color: white;">
+
+    <form name="form" class="form-horizontal" novalidate>
+        <fieldset>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Url à ajouter</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" ng-model="url" name="url" placeholder="Url" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-2">
+                </div>
+                <div class="col-lg-8">
+                    <input class="btn btn-sm btn-red" ng-click="addFlux(url)" ng-disabled="!form.$valid" value="Ajouter le flux"/>
+                    <ul ng-app ng-controller=feedCtrl class="nav navbar-nav navbar-right">
+                        <li>Utilisateur : {{user.email}}  </li>
+                    </ul>
+                </div>
+                <a class="col-lg-2" href="#/login">Log out</a>
+            </div>
+        </fieldset>
+    </form>
+</div>
 <div ng-app ng-controller=feedCtrl>
-    <ul>
-        <li ng-repeat=" opt in opts" ng-bind-html-unsafe="opt.text" >
-            {{ opt.text }}
+    <ul ng-repeat=" opt in listUrl">
+        <li >
+            {{ opt.url }}  <input class="btn btn-sm btn-red" ng-click="deleteFlux(opt.id)" value="Supprimer ce flux"/>
         </li>
+
+            {{ opt.response }}
+
     </ul>
 
     <p>{{opt}}</p>

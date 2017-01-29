@@ -2,6 +2,12 @@ myApp.controller('feedCtrl',
     ['$scope', '$log', 'API_URL', 'IMG_URL', 'Data', 'tsUtils', '$state', '$rootScope', '$http',
         function ($scope, $log, API_URL, IMG_URL, Data, tsUtils, $state, $rootScope, $http) {
 
+            $scope.listUrl = new Array();
+
+            $scope.user = tsUtils.loadUser();
+            $log.debug("USERRRR");
+            $log.debug($scope.user);
+
             $scope.getFluxRSS = function(url) {
 
                 Data.getRSSFlux(url,
@@ -11,9 +17,11 @@ myApp.controller('feedCtrl',
                     //$log.debug(url);
                     $log.debug("DATA :" + data);
 
-                    var x2js = new X2JS();
-                      $scope.myJSON = x2js.xml_str2json(data);
-                    $log.debug("IOJCEZF : " +  $scope.myJSON);
+                    // var x2js = new X2JS();
+                    //   $scope.myJSON = x2js.xml_str2json(data);
+                    //
+                    //   $log.debug("IOJCEZF : ");
+                    //   $log.debug($scope.myJSON.books);
                   },
                   function (data, status, headers, config) {
                       $log.debug("FAIL DE LA MISTIFICATION");
@@ -21,10 +29,6 @@ myApp.controller('feedCtrl',
 
                 //$http.get("http://www.lepoint.fr/24h-infos/rss.xml");
             };
-
-            function feedCtrl($scope) {
-                $scope.items = x2js;
-            }
 
             $scope.ok = function() {
 
@@ -43,11 +47,13 @@ myApp.controller('feedCtrl',
 
                             var donnee = data.feedList.feedList;
                             $log.debug("middle");
-                            var listUrl = new Array();
                             $log.debug(donnee);
                             for (var toto = 0; toto < donnee.length; toto++){
-                                //$log.debug(donnee[toto].url);
-                                listUrl[toto] = donnee[toto].url;
+                                $log.debug("URL: " + donnee[toto].url);
+                                $log.debug("ID:" + donnee[toto].id);
+                                $log.debug("RESPONSE:" + donnee[toto].response);
+
+                                $scope.listUrl[toto] = donnee[toto];
                                 //$scope.trustAsResourceUrl(donnee[toto].url);
                                 $scope.getFluxRSS(donnee[toto].url);                            // -> http://blog.inovia-conseil.fr/?p=202
                             }
@@ -63,6 +69,46 @@ myApp.controller('feedCtrl',
                     });
             };
 
+            $scope.addFlux = function(url) {
+
+                //tsUtils.startLoader();
+
+                Data.addflux(url,
+                    function (data, status, headers, config) {
+                        $log.debug("REUSSITE");
+                        //$log.debug(headers);
+                        //$log.debug(url);
+                        $log.debug("DSATA :::: ");
+
+                        $log.debug(data);
+
+                        $scope.listUrl = data.feedList.feedList;
+                        location.reload();
+                        //$scope.ok();
+                    },
+                    function (data, status, headers, config) {
+                        $log.debug("FAIL DU ADD");
+                    })
+            };
+
+            $scope.deleteFlux = function(id) {
+
+                //tsUtils.startLoader();
+
+                Data.deleteflux(id,
+                    function (data, status, headers, config) {
+                        $log.debug("DATA:::");
+                        $log.debug(data);
+                        $scope.listUrl = new Array();
+                        $scope.ok();
+
+                    },
+                    function (data, status, headers, config) {
+                        $log.debug("FAIL DU delete");
+                    })
+            };
+
             $scope.ok();
+
 
         }]);

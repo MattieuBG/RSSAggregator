@@ -25,4 +25,27 @@ myApp.controller('loginCtrl',
                     });
             };
 
+            $scope.create = function() {
+
+                tsUtils.startLoader();
+
+                Data.createA(
+                    $scope.email,
+                    $scope.password,
+                    function (data, status, headers, config) {
+                        tsUtils.stopLoader();
+                        if(status >= 200 && status < 300) {
+                            $log.debug(data);
+                            tsUtils.storeUser(data);
+                            $state.go("feed");
+                        } else {
+                            tsUtils.alertGenericError();
+                        }
+                    },
+                    function (data, status, headers, config) {
+                        tsUtils.stopLoader();
+                        tsUtils.alertGenericError();
+                    });
+            };
+
 }]);
