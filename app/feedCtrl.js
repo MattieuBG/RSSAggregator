@@ -31,6 +31,7 @@ myApp.controller('feedCtrl',
                 //$http.get("http://www.lepoint.fr/24h-infos/rss.xml");
             };
 
+
             $scope.ok = function() {
 
                 //tsUtils.startLoader();
@@ -60,6 +61,8 @@ myApp.controller('feedCtrl',
                                 //$scope.trustAsResourceUrl(donnee[toto].url);
                                 //$scope.getFluxRSS(donnee[toto].url);                            // -> http://blog.inovia-conseil.fr/?p=202
                             }
+
+                            //$scope.listXML = $scope.decode($scope.listXML);
                             //$log.debug(listUrl);
 
                         } else {
