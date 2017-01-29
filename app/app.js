@@ -27,15 +27,15 @@ myApp.config(function ($stateProvider, $urlRouterProvider) {
             }
         })
 
-        // .state('feed', {
-        //     url: '/feed',
-        //     templateUrl: 'pages/feed.html',
-        //     controller: 'feedCtrl',
-        //     data: {
-        //         requireLogin: true,
-        //         title: "Feed"
-        //     }
-        // })
+        .state('feed', {
+            url: '/feed',
+            templateUrl: 'pages/feed.html',
+            controller: 'feedCtrl',
+            data: {
+                requireLogin: true,
+                title: "Feed"
+            }
+        })
 
         /* Information: Sert à rajouter une route
         * templateUrl : Code HTML dans le dossier pages

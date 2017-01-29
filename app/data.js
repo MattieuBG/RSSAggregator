@@ -7,22 +7,60 @@ myApp.factory("Data",
 
             data.login = function (id, password, success, error) {
 
-                var url = API_URL + "login";
+                var url = API_URL + "login/mailLogin";
 
                 var req = {
                     method: 'POST'
                     , url: url
                     , headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json" //application/x-www-form-urlencoded
                     }
                     , params: {
-                        username: id,
+                        email: id,
                         password: password
                     }
                     , data: " "
                 };
 
                 return $http(req).success(success).error(error);
+            };
+
+            data.getfeed = function (success, error) {
+
+                var url = API_URL + "feed/getFeeds";
+
+                var req = {
+                    method: 'GET'
+                    , url: url
+                    , headers: {
+                        "Content-Type": "application/json",
+                        "token": tsUtils.getToken()//"le token a get de la save : eyJ2ZXJzaW9uIjoxLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJyc3MuYWdncmVnIiwic3ViIjoiZGVkaWVycmVtaUBnbWFpbC5jb20ifQ.-DcUXDdQf4XZrJo4bKvXmOZJBhFqsIkpepdzqfYqEYlgJf8DAeL1xr7v8EU629b5Lr7QeCJsXVcZ14q4939tzQ"
+                    }
+                    , params: {
+                        //email: id,
+                        //password: password
+                    }
+                    , data: " "
+                };
+
+                return $http(req).success(success).error(error);
+            };
+
+
+            data.getRSSFlux = function (url, success, error) {
+
+                var req = {
+                    method: 'GET'
+                    , url: url
+                    , headers: {
+                        "Content-Type": undefined, // SOIT L'ERREUR EST LA AVEC UN CONTENT TYPE DIFFERENT OU DES Access-Control-Allow-Origin different ???
+                    }
+                    , params: {
+                    }
+                    , data: " "
+                };
+
+                return $http(req).success(success).error(error); // deja testé en jsonp
             };
 
             /* Information : exemple type d'une requête */

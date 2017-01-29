@@ -1,28 +1,61 @@
 myApp.controller('feedCtrl',
-    ['$scope', '$log', 'API_URL', 'IMG_URL', 'Data', 'tsUtils', '$state', '$rootScope',
-        function ($scope, $log, API_URL, IMG_URL, Data, tsUtils, $state, $rootScope) {
+    ['$scope', '$log', 'API_URL', 'IMG_URL', 'Data', 'tsUtils', '$state', '$rootScope', '$http',
+        function ($scope, $log, API_URL, IMG_URL, Data, tsUtils, $state, $rootScope, $http) {
+
+            $scope.getFluxRSS = function(url) {
+
+                Data.getRSSFlux(url,
+                  function (data, status, headers, config) {
+                    $log.debug("REUSSITE");
+                    $log.debug(headers);
+                    $log.debug(url);
+                    $log.debug(data);
+                    //var jsonObj = x2js.xml2json(data); // pour parse le xml
+                  },
+                  function (data, status, headers, config) {
+                      $log.debug("FAIL DE LA MISTIFICATION");
+                  })
+
+                //$http.get("http://www.lepoint.fr/24h-infos/rss.xml");
+            };
 
             $scope.ok = function() {
 
-                tsUtils.startLoader();
+                //tsUtils.startLoader();
 
-                Data.login(
-                    $scope.email,
-                    $scope.password,
+                Data.getfeed(
                     function (data, status, headers, config) {
                         tsUtils.stopLoader();
                         if(status >= 200 && status < 300) {
-                            $log.debug(data);
-                            tsUtils.storeUser(data);
-                            $state.go("qualitycheck");
+                            //$log.debug(data);
+
+                            //tsUtils.storeUser(data);
+                            //parse xml to list
+                            //$state.go("qualitycheck");
+                            $log.debug("before");
+
+                            var donnee = data.feedList.feedList;
+                            $log.debug("middle");
+                            var listUrl = new Array();
+                            $log.debug(donnee);
+                            for (var toto = 0; toto < donnee.length; toto++){
+                                $log.debug(donnee[toto].url);
+                                listUrl[toto] = donnee[toto].url;
+                                //$scope.trustAsResourceUrl(donnee[toto].url);
+                                $scope.getFluxRSS(donnee[toto].url);                            // -> http://blog.inovia-conseil.fr/?p=202
+                            }
+                            $log.debug(listUrl);
+
                         } else {
                             tsUtils.alertGenericError();
                         }
                     },
                     function (data, status, headers, config) {
-                        tsUtils.stopLoader();
-                        tsUtils.alertGenericError();
+                        //tsUtils.stopLoader();
+                        //tsUtils.alertGenericError();
                     });
             };
+
+            $scope.ok();
 
         }]);

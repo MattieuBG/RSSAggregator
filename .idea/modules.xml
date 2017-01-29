@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/UnitBackOffice.iml" filepath="$PROJECT_DIR$/UnitBackOffice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RSSAggregator.iml" filepath="$PROJECT_DIR$/RSSAggregator.iml" />
     </modules>
   </component>
 </project>

@@ -14,7 +14,7 @@ myApp.controller('loginCtrl',
                         if(status >= 200 && status < 300) {
                             $log.debug(data);
                             tsUtils.storeUser(data);
-                            $state.go("qualitycheck");
+                            $state.go("feed");
                         } else {
                             tsUtils.alertGenericError();
                         }
