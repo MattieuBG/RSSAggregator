@@ -1,0 +1,9 @@
+<div ng-app ng-controller=feedCtrl>
+    <ul>
+        <li ng-repeat=" opt in opts" ng-bind-html-unsafe="opt.text" >
+            {{ opt.text }}
+        </li>
+    </ul>
+
+    <p>{{opt}}</p>
+</div>

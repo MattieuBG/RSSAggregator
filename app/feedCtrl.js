@@ -6,11 +6,14 @@ myApp.controller('feedCtrl',
 
                 Data.getRSSFlux(url,
                   function (data, status, headers, config) {
-                    $log.debug("REUSSITE");
-                    $log.debug(headers);
-                    $log.debug(url);
-                    $log.debug(data);
-                    //var jsonObj = x2js.xml2json(data); // pour parse le xml
+                    //$log.debug("REUSSITE");
+                    //$log.debug(headers);
+                    //$log.debug(url);
+                    $log.debug("DATA :" + data);
+
+                    var x2js = new X2JS();
+                      $scope.myJSON = x2js.xml_str2json(data);
+                    $log.debug("IOJCEZF : " +  $scope.myJSON);
                   },
                   function (data, status, headers, config) {
                       $log.debug("FAIL DE LA MISTIFICATION");
@@ -18,6 +21,10 @@ myApp.controller('feedCtrl',
 
                 //$http.get("http://www.lepoint.fr/24h-infos/rss.xml");
             };
+
+            function feedCtrl($scope) {
+                $scope.items = x2js;
+            }
 
             $scope.ok = function() {
 
@@ -39,12 +46,12 @@ myApp.controller('feedCtrl',
                             var listUrl = new Array();
                             $log.debug(donnee);
                             for (var toto = 0; toto < donnee.length; toto++){
-                                $log.debug(donnee[toto].url);
+                                //$log.debug(donnee[toto].url);
                                 listUrl[toto] = donnee[toto].url;
                                 //$scope.trustAsResourceUrl(donnee[toto].url);
                                 $scope.getFluxRSS(donnee[toto].url);                            // -> http://blog.inovia-conseil.fr/?p=202
                             }
-                            $log.debug(listUrl);
+                            //$log.debug(listUrl);
 
                         } else {
                             tsUtils.alertGenericError();
